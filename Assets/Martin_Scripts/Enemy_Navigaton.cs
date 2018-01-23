@@ -55,6 +55,7 @@ public class Enemy_Navigaton : NetworkBehaviour
     [ServerCallback]
     private void Update()
     {
+        UnsetTarget();
         UpdateTarget();
 
         if (mpu_Target != null)
@@ -69,13 +70,16 @@ public class Enemy_Navigaton : NetworkBehaviour
         // ( Ziel leer         || Ziel nicht in der Liste)
         if (mpu_Target == null || !CheckIfTargetContains())
         {
-            Debug.Log("Base im Target");
-            mpu_Target = mpu_ObjBaseTarget.transform;
+            Debug.Log("Oben");
+            if (mpi_ET.mpu_Players.Count > 0)
+            {
+                mpu_Target = mpi_ET.mpu_Players[0].PlayerObject.transform;
+            }
         }
         else
         {
-            Debug.Log("Spieler im Target");
-            mpu_Target = mpi_ET.mpu_Players[0].PlayerTransform;
+            Debug.Log("Unten");
+            mpu_Target = mpu_ObjBaseTarget.transform;
         }
     }
 
@@ -84,7 +88,7 @@ public class Enemy_Navigaton : NetworkBehaviour
         // Falls ein Element in der Liste mit Spielern das Ziel enthält...
         foreach (Enemy_Targeting.TargetInfoData TID in mpi_ET.mpu_Players)
         {
-            if (TID.PlayerObject == mpu_Target.gameObject)
+            if (TID.PlayerObject.tag == mpu_Target.gameObject.tag)
             {
                 return true;
             }
@@ -92,6 +96,14 @@ public class Enemy_Navigaton : NetworkBehaviour
         }
 
         return false;
+    }
+
+    private void UnsetTarget()
+    {
+        if (mpi_ET.mpu_Players.Count > 0)
+        {
+            mpu_Target = null;
+        }
     }
 
     private Transform SetupTarget()
