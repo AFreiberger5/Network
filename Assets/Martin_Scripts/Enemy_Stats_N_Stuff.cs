@@ -54,16 +54,15 @@ public class Enemy_Stats_N_Stuff : NetworkBehaviour
             Destroy(gameObject);
             OnNetworkDestroy();
         }
-
-
-
+        
         // Falls Spieler bzw. Target in HitRange
-        if (GetDistanceTo(mpi_Enav.mpu_Target, gameObject.transform) <= 1.5f)
+        if (mpi_Enav.mpu_Target != null)
         {
-            Attack();
+            if (GetDistanceTo(mpi_Enav.mpu_Target, gameObject.transform) <= 1.5f)
+            {
+                Attack();
+            }
         }
-
-
     }
 
     [ServerCallback]
@@ -78,7 +77,6 @@ public class Enemy_Stats_N_Stuff : NetworkBehaviour
 
     public void Attack()
     {
-        Debug.Log("Nah alda!");
         // Schlaaaaag!
         mpu_ObjFistAnkleLeft.transform.Rotate(Vector3.up, 90);
         // Bewege den arm zurück

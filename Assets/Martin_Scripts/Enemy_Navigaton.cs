@@ -7,29 +7,43 @@ using UnityEngine.Networking;
 
 public class Enemy_Navigaton : NetworkBehaviour
 {
-    public int TargetLife = 1;
-
-    private GameObject[] mpi_ObjPlayers;
-    public GameObject mpu_ObjBaseTarget;
+    private GameObject mpu_ObjBaseTarget;
+    [HideInInspector]
     public Transform mpu_Target;
     private NavMeshAgent mpi_Agent;
+    private Enemy_Targeting mpi_ET;         // Nach Hause telefonieren!
+    private Enemy_Stats_N_Stuff mpi_ESNS;
+
+    public float HERO_LIFE = 5;
 
     // Use this for initialization
     void Awake()
     {
-        // Setze den Arrayy mit den Spielern
-        mpi_ObjPlayers = new GameObject[4];
-
-        mpu_Target = mpu_ObjBaseTarget.transform;
+        // Lege das BasisTarget fest
+        mpu_ObjBaseTarget = GameObject.FindGameObjectWithTag("BaseTarget");
 
         // Setze den agenten
         mpi_Agent = GetComponent<NavMeshAgent>();
+
+        // Setze die Enemy_Navigation
+        mpi_ET = GetComponentInChildren<Enemy_Targeting>();
+
+        // Setze die Enemy_Stats_N_Stuff
+        mpi_ESNS = GetComponent<Enemy_Stats_N_Stuff>();
+
+        // das Leben des Spielers mit Bezug zum Spieler
+        // HERO_LIFE = Was auch immer es ist().HP;
+
 
         // falls der agent nicht gesetzt wurde, erstmal ALARM machen.
         if (mpi_Agent != null)
         {
             // Das ziel setzen
-            SetTarget();
+            mpu_Target = SetupTarget();
+
+            Vector3 Target = mpu_Target.transform.position;
+            mpi_Agent.SetDestination(Target);
+
         }
         else
         {
@@ -41,29 +55,56 @@ public class Enemy_Navigaton : NetworkBehaviour
     [ServerCallback]
     private void Update()
     {
-        // Das ziel aktuell halten
-        if (!CheckforTargetsExistence(mpu_Target))
-        {
-            mpu_Target = null;
-        }
+        UpdateTarget();
 
-        // Das Ziel immer aktuell festlegen
+        if (mpu_Target != null)
+        {
+            mpi_Agent.SetDestination(mpu_Target.position);
+        }
 
     }
 
-    private void SetTarget()
+    private void UpdateTarget()
     {
-        // falls das target nicht null ist
-        if (mpu_Target != null)
+        // ( Ziel leer         || Ziel nicht in der Liste)
+        if (mpu_Target == null || !CheckIfTargetContains())
         {
-            // Target nicht gesetzt. Base ansteuern!
-            Vector3 TargetPos = GetTarget("Player");
-            mpi_Agent.SetDestination(TargetPos);
+            Debug.Log("Base im Target");
+            mpu_Target = mpu_ObjBaseTarget.transform;
         }
         else
         {
-            Vector3 TargetPos = GetTarget("BaseTarget");
-            mpi_Agent.SetDestination(TargetPos);
+            Debug.Log("Spieler im Target");
+            mpu_Target = mpi_ET.mpu_Players[0].PlayerTransform;
+        }
+    }
+
+    private bool CheckIfTargetContains()
+    {
+        // Falls ein Element in der Liste mit Spielern das Ziel enthält...
+        foreach (Enemy_Targeting.TargetInfoData TID in mpi_ET.mpu_Players)
+        {
+            if (TID.PlayerObject == mpu_Target.gameObject)
+            {
+                return true;
+            }
+
+        }
+
+        return false;
+    }
+
+    private Transform SetupTarget()
+    {
+        // Wenn das Ziel noch nicht gesetzt wurde, wird beim Start automatisch das Ziel auf das BaseTarget gelegt, damit
+        // Gegner nicht vollkommen retardet in der Gegend rumdümpelt.
+        if (mpu_Target != null)
+        {
+            return mpu_Target;
+        }
+        else
+        {
+            return mpu_ObjBaseTarget.transform;
         }
     }
 
