@@ -9,5 +9,8 @@ EditorBuildSettings:
     path: Assets/Login Scene.unity
     guid: 36f194ef8df6f5c429a58f4de555d48f
   - enabled: 1
-    path: Assets/online scene.unity
+    path: Assets/Scenes/default scene.unity
     guid: c63202816b6d4424dadb8924901b5df2
+  - enabled: 1
+    path: Assets/online scene.unity
+    guid: 571a0e90b624bcf46b678cc979b9b029
