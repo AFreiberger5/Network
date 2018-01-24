@@ -4,7 +4,13 @@
 TagManager:
   serializedVersion: 2
   tags:
+<<<<<<< HEAD
   - HealthBoost
+=======
+  - hitFX
+  - TankShell
+  - MainCanvas
+>>>>>>> 228113fec286edb5dcee15d925e0187e0a71ef32
   layers:
   - Default
   - TransparentFX
