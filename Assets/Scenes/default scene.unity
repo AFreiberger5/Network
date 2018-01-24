@@ -439,18 +439,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Healthorb: {fileID: 1908667330972406, guid: c2be7844de1daad4382ea066f8675b76, type: 2}
+  spawndelay: 5
 --- !u!4 &837628588
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 837628585}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1198565788
 GameObject:
@@ -640,7 +641,7 @@ Transform:
   m_Children:
   - {fileID: 1858192537}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1786256468
 MonoBehaviour:

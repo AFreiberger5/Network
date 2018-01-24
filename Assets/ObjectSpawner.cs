@@ -9,13 +9,11 @@ public class ObjectSpawner : NetworkBehaviour
     
     public GameObject Healthorb;
     private float spawndelay = 5f;
-    private Vector3 spawpos;
+    private Vector3 spawpos = new Vector3(0, 5, 0);
     
 	// Use this for initialization
-    [ServerCallback]
 	void Start ()
 	{
-        if(isServer)
 	    OrbSpawner();
     }
 	
@@ -24,24 +22,15 @@ public class ObjectSpawner : NetworkBehaviour
 	{
 		
 	}
-    [ServerCallback]
+
     void OrbSpawner()
     {
-
-        //spawndelay = -Time.deltaTime;
-        //if (spawndelay <= 0)
-        //{
-        
-        
-            spawpos.x = 0;
-            spawpos.y = 5;
-            spawpos.z = 0;
-
+        spawndelay = -Time.deltaTime;
+        if (spawndelay <= 0)
+        {
             Instantiate(Healthorb, spawpos, Quaternion.identity);
+            spawndelay = 5f;
 
-        
-            //spawndelay = 5f;
-
-        //}
+        }
     }
 }

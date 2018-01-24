@@ -7,7 +7,7 @@ public class OrbPickups : NetworkBehaviour {
 
     void OnTriggerEnter(Collider _col)
     {
-        if (_col.gameObject.CompareTag("Pick Up"))
+        if (_col.gameObject.CompareTag("Player"))
         {
             _col.gameObject.SetActive(false);
             // + gib dem Spieler + x-HP
