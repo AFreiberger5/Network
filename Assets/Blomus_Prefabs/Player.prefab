@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 4557044058564054}
   m_Layer: 0
   m_Name: NamePos
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -61,7 +61,7 @@ GameObject:
   - component: {fileID: 4178775447957022}
   m_Layer: 0
   m_Name: Turret
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 65028500315184724}
   m_Layer: 0
   m_Name: Chassis
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -495,7 +495,7 @@ MonoBehaviour:
   m_isDead: 0
   m_deathPrefab: {fileID: 140182, guid: 60f07a86aa4f15f4196555376995156c, type: 2}
   m_healthPos: {fileID: 4787769872290238}
-  m_healthSliderPrefab: {fileID: 114276515122740168, guid: 4775944bda2bebd4b8dc5a9a189f12d1,
+  m_healthSliderPrefab: {fileID: 114331895052150058, guid: bdf004ae99c1b3543a5568e9ffbc91d9,
     type: 2}
   m_healthSlider: {fileID: 0}
 --- !u!114 &114816570140789878

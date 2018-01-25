@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class PlayerHealth : NetworkBehaviour
 {
     [SyncVar(hook = "OnHealthChange")]
-    float m_currentHealth;
+    float m_currentHealth = 100;
 
     public float m_maxHealth = 100;
 
@@ -34,7 +34,7 @@ public class PlayerHealth : NetworkBehaviour
         m_healthSlider = Instantiate(m_healthSliderPrefab, Vector3.zero, Quaternion.identity) as Slider;
         m_healthSlider.transform.SetParent(canvas.transform);
         Reset();
-        
+
     }
 
     // Update is called once per frame
@@ -48,6 +48,7 @@ public class PlayerHealth : NetworkBehaviour
     {
         if (m_healthSlider != null)
         {
+            m_currentHealth = _value;
             m_healthSlider.value = m_currentHealth;
         }
     }
@@ -57,13 +58,11 @@ public class PlayerHealth : NetworkBehaviour
         OnHealthChange(m_currentHealth);
     }
 
+    
     public void Damage(float _dmg)
-    {
-        if (!isServer)
-        {
-            return;
-        }
+    {       
         m_currentHealth += _dmg;
+        m_healthSlider.value = m_currentHealth;
 
         if (m_currentHealth <= 0 && !m_isDead)
         {
@@ -107,5 +106,13 @@ public class PlayerHealth : NetworkBehaviour
         m_currentHealth = m_maxHealth;
         SetActiveState(true);
         m_isDead = false;
+    }
+
+    private void OnDestroy()
+    {
+        if (m_healthSlider != null)
+        {
+            Destroy(m_healthSlider.gameObject);
+        }
     }
 }

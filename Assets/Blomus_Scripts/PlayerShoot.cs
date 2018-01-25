@@ -49,7 +49,7 @@ public class PlayerShoot : NetworkBehaviour {
     private void CmdShoot()
     {
         CreateBullet();
-
+        RpcCreateBullet();
     }
 
     [ClientRpc]

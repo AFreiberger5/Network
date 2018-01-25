@@ -341,7 +341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_speed: 20
-  m_damage: -1
+  m_damage: -5
   m_lifetime: 2
   m_collisionTags:
   - Player
