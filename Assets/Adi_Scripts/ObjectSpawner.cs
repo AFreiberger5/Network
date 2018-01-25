@@ -17,6 +17,7 @@ public class ObjectSpawner : NetworkBehaviour
     {
         if (isServer)
         {
+            //GameObject wird immer nach gewisser zeit mit gewisser tickrate
             InvokeRepeating("RpcOrbSpawner", 10, 20);
 
         }

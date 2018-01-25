@@ -5,11 +5,12 @@ using UnityEngine.Networking;
 
 public class DmgZone : NetworkBehaviour
 {
-    private int m_EnmyDmg;
+    private Enemy_Stats_N_Stuff enemy_Stats_N_Stuff;
+
 	// Use this for initialization
-	void Start ()
+	void Awake ()
 	{
-		
+        enemy_Stats_N_Stuff = GetComponent<Enemy_Stats_N_Stuff>();
 	}
 	
 	// Update is called once per frame
@@ -18,11 +19,11 @@ public class DmgZone : NetworkBehaviour
 		
 	}
 
-    void OnTriggerEnter(Collider _other)
+    void OnTriggerExit(Collider _other)
     {
-        if (_other.tag == "Enmy")
+        if (_other.tag == "Enemy")
         {
-            //Mach dem Gegener Schaden
+            
         }
     }
 }
