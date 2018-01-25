@@ -70,6 +70,8 @@ public class PlayerSetup : NetworkBehaviour
     public void OnDestroy() // Label ist kein Netzwerkobjekt, Unitys Garbagecollector muss es löschen sobald das Gameobject zerstört wurde
     {
         if (m_nameLabel != null)
+        {
             Destroy(m_nameLabel.gameObject);
+        }
     }
 }
