@@ -8,6 +8,7 @@ TagManager:
   - TankShell
   - hitFX
   - MainCanvas
+  - Pick Up
   layers:
   - Default
   - TransparentFX
