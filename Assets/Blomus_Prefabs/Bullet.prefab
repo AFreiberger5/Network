@@ -343,8 +343,7 @@ MonoBehaviour:
   m_speed: 20
   m_damage: -1
   m_lifetime: 2
-  m_collisionTags:
-  - Enemy
+  m_collisionTags: []
   m_exploFx: {fileID: 198466470678868152}
 --- !u!114 &114401774814153214
 MonoBehaviour:

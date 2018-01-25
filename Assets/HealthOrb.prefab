@@ -23,7 +23,6 @@ GameObject:
   - component: {fileID: 135357502990928452}
   - component: {fileID: 23834376370159326}
   - component: {fileID: 114587517999843558}
-  - component: {fileID: 114376803722594164}
   m_Layer: 0
   m_Name: HealthOrb
   m_TagString: Untagged
@@ -38,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1908667330972406}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 43.923336, y: 2.658636, z: 48.06662}
+  m_LocalPosition: {x: 0, y: 5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -85,38 +84,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1908667330972406}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &114376803722594164
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1908667330972406}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 194
-    i1: 190
-    i2: 120
-    i3: 68
-    i4: 222
-    i5: 29
-    i6: 170
-    i7: 212
-    i8: 56
-    i9: 46
-    i10: 160
-    i11: 102
-    i12: 248
-    i13: 103
-    i14: 91
-    i15: 118
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
 --- !u!114 &114587517999843558
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -135,7 +102,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1908667330972406}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5

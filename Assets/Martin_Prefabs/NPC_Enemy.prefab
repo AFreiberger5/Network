@@ -41,11 +41,10 @@ GameObject:
   - component: {fileID: 114338300344858440}
   - component: {fileID: 114879323167923386}
   - component: {fileID: 114326645100743364}
-  - component: {fileID: 54876049182380354}
-  - component: {fileID: 136194778033551734}
+  - component: {fileID: 136864188859028284}
   m_Layer: 0
   m_Name: NPC_Enemy
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -63,7 +62,7 @@ GameObject:
   - component: {fileID: 23763804670245548}
   m_Layer: 0
   m_Name: Fistright
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -78,7 +77,7 @@ GameObject:
   - component: {fileID: 4800910686665602}
   m_Layer: 0
   m_Name: FistankleRight
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -93,7 +92,7 @@ GameObject:
   - component: {fileID: 4915701208017854}
   m_Layer: 0
   m_Name: Fistankle
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -111,7 +110,7 @@ GameObject:
   - component: {fileID: 65205685472041026}
   m_Layer: 0
   m_Name: FistLeft
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -126,7 +125,7 @@ GameObject:
   - component: {fileID: 4043793812635572}
   m_Layer: 0
   m_Name: FistankleLeft
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -144,7 +143,7 @@ GameObject:
   - component: {fileID: 23515420676697558}
   m_Layer: 0
   m_Name: Enemy_Model_Capsule
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -209,7 +208,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1425484789463650}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 45.213528, y: 5.913808, z: 53.655052}
+  m_LocalPosition: {x: -20.12114, y: -0.0000019073486, z: 4.017975}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4013043305236316}
@@ -383,21 +382,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1862988027645140}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &54876049182380354
-Rigidbody:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1425484789463650}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!65 &65205685472041026
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -446,6 +430,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mpu_Target: {fileID: 0}
+  HERO_LIFE: 5
 --- !u!114 &114326645100743364
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -458,9 +443,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mpu_CurrentHP: 0
-  mpu_ObjLoot:
-  - {fileID: 1908667330972406, guid: c2be7844de1daad4382ea066f8675b76, type: 2}
-  - {fileID: 1908667330972406, guid: c2be7844de1daad4382ea066f8675b76, type: 2}
   mpu_ObjCenter: {fileID: 1043978540659928}
   mpu_ObjFistAnkle: {fileID: 1785831584420586}
   mpu_ObjFistAnkleLeft: {fileID: 1923215166455912}
@@ -532,19 +514,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 15
   m_Center: {x: 0, y: 0, z: 0}
---- !u!136 &136194778033551734
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1425484789463650}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!136 &136788540239034472
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -558,6 +527,19 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &136864188859028284
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1425484789463650}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 1
+  m_Height: 3
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!195 &195191519334247018
 NavMeshAgent:
   m_ObjectHideFlags: 1

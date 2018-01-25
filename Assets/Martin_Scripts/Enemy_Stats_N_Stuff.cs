@@ -12,11 +12,6 @@ public class Enemy_Stats_N_Stuff : NetworkBehaviour
     // Verteidigungspunkte des Gegners
     private float mpi_Defense = 15;
     private Enemy_Navigaton mpi_Enav;
-    private float mpi_AttackCoolDown = 0;
-
-    private PlayerHealth mpi_PH;
-
-    public List<GameObject> mpu_ObjLoot;
 
     public GameObject mpu_ObjCenter;
     public GameObject mpu_ObjFistAnkle;
@@ -24,8 +19,6 @@ public class Enemy_Stats_N_Stuff : NetworkBehaviour
     public GameObject mpu_ObjFistAnkleRight;
     public GameObject mpu_ObjFistLeft;
     public GameObject mpu_ObjFistRight;
-
-    private bool mpi_ActiveAttacking = false;
 
 
     public float mpuP_HP
@@ -48,69 +41,56 @@ public class Enemy_Stats_N_Stuff : NetworkBehaviour
 
         // Enemy_Navigation script festlegen
         mpi_Enav = GetComponent<Enemy_Navigaton>();
-
     }
 
     // Update is called once per frame
     [ServerCallback]
     void Update()
     {
-        // zählt den CoolDown langsam nach oben.
-        mpi_AttackCoolDown += 0.1f * Time.deltaTime;
-
-        // Timer auto Reset
-        if (mpi_AttackCoolDown >= 1)
-        {
-            mpi_AttackCoolDown = 0;
-        }
-
         // Auf leben achten. Falls Leben kleiner gleich 0, Gegner tot.
         if (mpuP_HP <= 0)
         {
             // Gegner ZERSTÖREN!!!
-
-            DropThatShit();
             Destroy(gameObject);
             OnNetworkDestroy();
         }
-
-        // Falls Spieler bzw. Target in HitRange und das Ziel den Tag Player hat
-        if (mpi_Enav.mpu_Target != null && mpi_Enav.mpu_Target.gameObject.tag == "Player")
+        
+        // Falls Spieler bzw. Target in HitRange
+        if (mpi_Enav.mpu_Target != null)
         {
-            if (GetDistanceTo(mpi_Enav.mpu_Target, gameObject.transform) <= 2f && mpi_AttackCoolDown >= 0.2f)
+            if (GetDistanceTo(mpi_Enav.mpu_Target, gameObject.transform) <= 1.5f)
             {
-                mpi_ActiveAttacking = !mpi_ActiveAttacking;
                 Attack();
-                mpi_AttackCoolDown = 0;
             }
+        }
+    }
+
+    [ServerCallback]
+    private void OnTriggerEnter(Collider _col)
+    {
+        if (_col.tag == "Teaball")
+        {
+            // Leben um 1 verringern bei Treffer mit Teekanne!
+            mpuP_HP -= 1;
         }
     }
 
     public void Attack()
     {
         // Schlaaaaag!
+        mpu_ObjFistAnkleLeft.transform.Rotate(Vector3.up, 90);
+        // Bewege den arm zurück
+        //mpu_ObjFistAnkleLeft.transform.Rotate(Vector3.up, 90 * Time.deltaTime);
 
-        // --- Optik ---
-        if (mpi_ActiveAttacking)
-        {
-            mpu_ObjFistAnkleLeft.transform.Rotate(Vector3.up, 90);
-            mpi_ActiveAttacking = false;
-        }
-
-        // --- Funktion ---
-
-        // Holt sich den Script vom entsprechenden target!
-        mpi_PH = mpi_Enav.mpu_Target.GetComponentInParent<PlayerHealth>();
-
-        // DAMAAAAAAGE!
-        mpi_PH.Damage(-10);
-        
-        
+        // entsprechenden Arm bewegen (rotieren)
+        // Wenn dann der Colider der faust einen Spieler trifft
+        // Calculate Dmg
+        // Füge spieler XY den errechneten Schaden zu.
     }
 
-    public void CalculateDamage(float _DAMAGE)
+    public float CalculateDamage()
     {
-        mpuP_HP += _DAMAGE;
+        return 9001f;
     }
 
     public float GetDistanceTo(Transform _Target, Transform _Start)
@@ -130,20 +110,5 @@ public class Enemy_Stats_N_Stuff : NetworkBehaviour
     public override void OnDeserialize(NetworkReader _reader, bool _initialState)
     {
         mpu_CurrentHP = _reader.ReadInt32();
-    }
-
-    public void DropThatShit()
-    {
-        // Nach erfolgreichem Ausschalten eines Gegners muss ein zufälliger Loot gedroppt werden
-        Vector3 DropPos = new Vector3(transform.position.x, 1, transform.position.z);
-
-        // Zufällige Zahl zwischen 0 und der maximalen anzahl an Dropbaren Objekte. In unserem Fall 2. 
-        // Sprich 1, wegen Index und so
-        int Index = Random.Range(0,1);
-
-
-        GameObject Drop = Instantiate(mpu_ObjLoot[0], DropPos, Quaternion.identity);
-        NetworkServer.Spawn(Drop);
-
     }
 }
