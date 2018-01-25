@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class PlayerHealth : NetworkBehaviour
 {
     [SyncVar(hook = "OnHealthChange")]
-    float m_currentHealth;
+    public float m_currentHealth;
 
     public float m_maxHealth = 100;
 

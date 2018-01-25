@@ -3,14 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class OrbPickups : NetworkBehaviour {
+public class OrbPickups : NetworkBehaviour
+{
 
-    void OnTriggerEnter(Collider _col)
+    public List<string> m_collisionTags;
+    private int m_damage = 5;
+    void OnCollisionEnter(Collision _col)
     {
-        if (_col.gameObject.CompareTag("Player"))
+        CheckCollisions(_col);
+    }
+    void CheckCollisions(Collision _col)
+    {
+        if (m_collisionTags.Contains(_col.collider.tag))
         {
-            _col.gameObject.SetActive(false);
-            // + gib dem Spieler + x-HP
+            
+            PlayerHealth playerHealth = _col.gameObject.GetComponentInParent<PlayerHealth>();
+            if (playerHealth != null)
+            {
+                playerHealth.Damage(m_damage);
+                Destroy(gameObject);
+                //_col.gameObject.SetActive(false);
+                // + gib dem Spieler + x-HP
+            }
         }
     }
 }
