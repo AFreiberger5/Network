@@ -69,10 +69,12 @@ public class Bullet : NetworkBehaviour
         if (m_collisionTags.Contains(_col.collider.tag))
         {
             Explode();
-            PlayerHealth playerHealth = _col.gameObject.GetComponentInParent<PlayerHealth>();
-            if (playerHealth != null)
+            //PlayerHealth playerHealth = _col.gameObject.GetComponentInParent<PlayerHealth>();
+            Enemy_Stats_N_Stuff ESNS = _col.gameObject.GetComponentInParent<Enemy_Stats_N_Stuff>();
+            if (ESNS != null)
             {
-                playerHealth.Damage(m_damage);
+                //playerHealth.Damage(m_damage);
+                ESNS.CalculateDamage(-5);
             }
         }        
     }

@@ -14,7 +14,7 @@ public class Enemy_Navigaton : NetworkBehaviour
     private Enemy_Targeting mpi_ET;         // Nach Hause telefonieren!
     private Enemy_Stats_N_Stuff mpi_ESNS;
 
-    public float HERO_LIFE = 5;
+    private PlayerHealth mpi_PH;
 
     // Use this for initialization
     void Awake()
@@ -63,6 +63,7 @@ public class Enemy_Navigaton : NetworkBehaviour
             mpi_Agent.SetDestination(mpu_Target.position);
         }
 
+        //DontKeepItGoing();
     }
 
     private void UpdateTarget()
@@ -70,9 +71,9 @@ public class Enemy_Navigaton : NetworkBehaviour
         // ( Ziel leer         || Ziel nicht in der Liste)
         if (mpu_Target == null || !CheckIfTargetContains())
         {
-            Debug.Log("Oben");
             if (mpi_ET.mpu_Players.Count > 0)
             {
+                Debug.Log("Player Gefunden!");
                 mpu_Target = mpi_ET.mpu_Players[0].PlayerObject.transform;
             }
         }
@@ -117,6 +118,20 @@ public class Enemy_Navigaton : NetworkBehaviour
         else
         {
             return mpu_ObjBaseTarget.transform;
+        }
+    }
+
+    private void DontKeepItGoing()
+    {
+        // Wenn das Ziel ein Spieler ist...
+        if (mpu_Target != null && mpu_Target.gameObject.tag == "Player")
+        {
+            mpi_PH = mpu_Target.gameObject.GetComponentInParent<PlayerHealth>();
+        }
+
+        if (mpi_PH.m_isDead && mpu_Target != null && mpi_PH != null)
+        {
+            UnsetTarget();
         }
     }
 
