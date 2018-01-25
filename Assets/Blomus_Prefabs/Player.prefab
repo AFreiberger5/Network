@@ -491,6 +491,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3e7da443e611ac4bbc7fe9246a6af32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_currentHealth: 100
   m_maxHealth: 100
   m_isDead: 0
   m_deathPrefab: {fileID: 140182, guid: 60f07a86aa4f15f4196555376995156c, type: 2}

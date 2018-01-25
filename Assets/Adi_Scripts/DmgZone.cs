@@ -23,7 +23,7 @@ public class DmgZone : NetworkBehaviour
     {
         if (_other.tag == "Enemy")
         {
-            m_EnemyRigidbody.velocity= Vector3.zero;
+            //m_EnemyRigidbody.velocity= Vector3.zero;
         }
     }
 }
