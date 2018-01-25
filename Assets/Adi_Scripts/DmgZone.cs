@@ -5,12 +5,12 @@ using UnityEngine.Networking;
 
 public class DmgZone : NetworkBehaviour
 {
-    private Enemy_Stats_N_Stuff enemy_Stats_N_Stuff;
-
+    private Rigidbody m_EnemyRigidbody;
+    private int m_defaultvelocity = 0;
 	// Use this for initialization
 	void Awake ()
 	{
-        enemy_Stats_N_Stuff = GetComponent<Enemy_Stats_N_Stuff>();
+        m_EnemyRigidbody = GetComponent<Rigidbody>();
 	}
 	
 	// Update is called once per frame
@@ -23,7 +23,7 @@ public class DmgZone : NetworkBehaviour
     {
         if (_other.tag == "Enemy")
         {
-            
+            m_EnemyRigidbody.velocity= Vector3.zero;
         }
     }
 }
