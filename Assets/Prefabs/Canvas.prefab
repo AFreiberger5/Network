@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 114388250475117316}
   m_Layer: 5
   m_Name: Text (5)
-  m_TagString: Untagged
+  m_TagString: InfoText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -201,7 +201,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1712658898479078
 GameObject:
   m_ObjectHideFlags: 1
@@ -248,7 +248,7 @@ GameObject:
   - component: {fileID: 114740580372609336}
   m_Layer: 5
   m_Name: AdvancedInfoPanel
-  m_TagString: Untagged
+  m_TagString: InfoPanel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -534,6 +534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddbe206354afacd43865aa531903b06f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_controllers: []
   m_EntryPrefab: {fileID: 1570791958505472, guid: cddcd9f9865247f408fd7578bb4d43a9,
     type: 2}
 --- !u!114 &114299609786155976
@@ -628,7 +629,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "HitRate DMGDone\tDMGTaken\t"
+  m_Text: "HitRate HPHealed DMGTaken\t"
 --- !u!114 &114515715938803962
 MonoBehaviour:
   m_ObjectHideFlags: 1

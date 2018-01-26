@@ -12,9 +12,4 @@ public class QuitOnClick : MonoBehaviour
         Application.Quit();
 #endif
     }
-
-    public void FickDichUndDeineGanzeGenerationDuHurensohn()
-    {
-        Debug.Log("juhu");
-    }
 }

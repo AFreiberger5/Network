@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using System.Linq;
 
 [RequireComponent(typeof(PlayerHealth))]
 [RequireComponent(typeof(PlayerShoot))]
@@ -30,7 +31,7 @@ public class PlayerController : NetworkBehaviour
     // Use this for initialization
     void Start()
     {
-            
+
         m_pHealth = GetComponent<PlayerHealth>();
         m_pShoot = GetComponent<PlayerShoot>();
         m_pMotor = GetComponent<PlayerMotor>();
@@ -87,11 +88,11 @@ public class PlayerController : NetworkBehaviour
         m_pMotor.RotateTurret(turretDir);
 
 
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.T))
             UpdateUI(true);
 
 
-        if (Input.GetKeyUp(KeyCode.Tab))
+        if (Input.GetKeyUp(KeyCode.T))
             UpdateUI(false);
 
 
@@ -142,7 +143,6 @@ public class PlayerController : NetworkBehaviour
         if (_panelActive == m_InfoPanel.activeInHierarchy)
             return;
 
-
         if (m_InfoPanel.activeInHierarchy == true)
         {
             m_InfoPanel.SetActive(false);
@@ -150,8 +150,12 @@ public class PlayerController : NetworkBehaviour
         }
         else
             m_InfoPanel.SetActive(true);
-
+        float dmgtaken = GetComponent<PlayerHealth>().m_damageTaken;
+        float hphealed = GetComponent<PlayerHealth>().m_healthHealed;
+        // todo: add list for hitrate, made out # of bullets fired + times of scores gotten
+        string texxt = "HitRate: " + "HPHealed: " + hphealed + "DMGTaken: " + dmgtaken;
         //update UI, display ping and own stats
-
+        m_InfoPanel.GetComponentsInChildren<Text>().Where(o => o.tag == "InfoText").FirstOrDefault().text
+            = texxt;
     }
 }

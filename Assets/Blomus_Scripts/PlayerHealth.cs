@@ -132,8 +132,9 @@ public class PlayerHealth : NetworkBehaviour
     {
         m_Score += _points;
         //trying to find the playerpanel of the player, no list availible so have to search it manually
-        FindObjectsOfType<PlayerPanel>().
-            Where(o => o.GetComponentInChildren<PlayerPanelEntry>().m_Player.GetHashCode() == GetComponent<PlayerController>()
-            .GetHashCode()).FirstOrDefault().GetComponentsInChildren<Text>().Where(o => o.tag == "Score").FirstOrDefault().text = m_Score.ToString();
+        //didn't work, gave nullref-ex, no time to find error
+        //FindObjectsOfType<PlayerPanel>().
+        //    Where(o => o.GetComponentInChildren<PlayerPanelEntry>().m_Player.GetHashCode() == GetComponent<PlayerController>()
+        //    .GetHashCode()).FirstOrDefault().GetComponentsInChildren<Text>().Where(o => o.tag == "Score").FirstOrDefault().text = m_Score.ToString();
     }
 }

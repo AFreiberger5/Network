@@ -29,6 +29,7 @@ GameObject:
   - component: {fileID: 114502779519271524}
   - component: {fileID: 114889812940476406}
   - component: {fileID: 114816570140789878}
+  - component: {fileID: 114610021135751600}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -382,6 +383,8 @@ MonoBehaviour:
   m_bulletSpawn: {fileID: 4147119913070104}
   m_shotsPerBurst: 2
   m_reloadTime: 1
+  m_dmgMod: 1
+  m_modBool: 0
 --- !u!114 &114137189910991824
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -443,6 +446,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_spawnFx: {fileID: 118206, guid: bcbbb3162f34f7b4e815233f7b50972d, type: 2}
+  m_dmgMod: 1
 --- !u!114 &114502779519271524
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -464,6 +468,17 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
+--- !u!114 &114610021135751600
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1045980327082630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05651689dbac5444082198acae0401ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114706842694806094
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -499,6 +514,9 @@ MonoBehaviour:
   m_healthSliderPrefab: {fileID: 114331895052150058, guid: bdf004ae99c1b3543a5568e9ffbc91d9,
     type: 2}
   m_healthSlider: {fileID: 0}
+  m_damageTaken: 0
+  m_healthHealed: 0
+  m_Score: 0
 --- !u!114 &114816570140789878
 MonoBehaviour:
   m_ObjectHideFlags: 1
