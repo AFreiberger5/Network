@@ -55,7 +55,7 @@ public class Enemy_Stats_N_Stuff : NetworkBehaviour
         if (mpuP_HP <= 0)
         {
             // Gegner muss Loot fallen lassen!
-            int BitteBitteGanzVielLootJa = Random.Range(1,10);
+            int BitteBitteGanzVielLootJa = Random.Range(1, 10);
 
             // Wenn der Zufall es zulässt...
             if (BitteBitteGanzVielLootJa <= 6)
@@ -81,7 +81,7 @@ public class Enemy_Stats_N_Stuff : NetworkBehaviour
             Destroy(gameObject);
             OnNetworkDestroy();
         }
-        
+
         // Falls Spieler bzw. Target in HitRange
         if (mpi_Enav.mpu_Target != null)
         {
@@ -95,9 +95,12 @@ public class Enemy_Stats_N_Stuff : NetworkBehaviour
 
     public void Attack(float _Damage)
     {
-        PlayerHealth PH = mpi_Enav.mpu_Target.GetComponentInParent<PlayerHealth>();
+        if (mpi_Enav.mpu_Target.gameObject.tag == "Player")
+        {
+            PlayerHealth PH = mpi_Enav.mpu_Target.GetComponentInParent<PlayerHealth>();
+            PH.m_currentHealth += _Damage;
+        }
 
-        PH.m_currentHealth += _Damage;
     }
 
     public void CalculateDamage(float _Damage)
