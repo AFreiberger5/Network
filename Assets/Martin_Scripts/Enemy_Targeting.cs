@@ -52,7 +52,20 @@ public class Enemy_Targeting : NetworkBehaviour
     private void Update()
     {
         // Entfernt alle Spieler aus der Liste, die zu weit entfernt sind :D
-        mpu_Players.RemoveAll(o => GetDistance(o.PlayerObject.transform.position, gameObject.transform.position) >= RangeDistance);
+
+        //mpu_Players.RemoveAll(o => GetDistance(o.PlayerObject.transform.position, gameObject.transform.position) >= RangeDistance);
+
+        foreach (TargetInfoData TID in mpu_Players)
+        {
+            if (GetDistance(TID.PlayerObject.transform.position, gameObject.transform.position) >= RangeDistance)
+            {
+                if (TID.PlayerObject != null)
+                {
+                    mpu_Players.Remove(TID);
+                }
+
+            }
+        }
     }
 
     // Errechnet die Entfernung von zwei Objekten.

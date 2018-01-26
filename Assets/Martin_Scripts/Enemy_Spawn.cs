@@ -10,12 +10,26 @@ public class Enemy_Spawn : NetworkBehaviour
     // Gregors Liste PlayerData
     private List<GameObject> mpi_ObjPlayersOnline;
 
+    // Liste mit SPawnPoints relativ zum aktuellen SpawnPoint
+    private List<Vector3> mpi_SpawnPositionsAtPoint_1;
+    private List<Vector3> mpi_SpawnPositionsAtPoint_2;
+    private List<Vector3> mpi_SpawnPositionsAtPoint_3;
+    private List<Vector3> mpi_SpawnPositionsAtPoint_4;
+
+    // Die ultimative Liste, die alle Listen mit alternativen Spawnpunkten enthält.
+    private List<List<Vector3>> mpi_UltimateSpawnerPositions;
+
+    private SpawnSorter mpi_SpawnRegulation;
     public List<GameObject> mpu_ObjMonsters;
     public Transform[] mpu_SpawnerObjects;
     public int mpu_MaxEnemys = 3;
     Vector3[] mpi_Spawns;
 
+    public int mpi_EnemyPerWave_Min = 3;
+    public int mpi_EnemyPerWave_Max = 5;
+
     private float mpi_SpawnTimer = 0;
+    private int mpi_PlayersCount;
 
     public struct SpawnSorter
     {
@@ -35,27 +49,47 @@ public class Enemy_Spawn : NetworkBehaviour
         }
     }
 
+    private void Awake()
+    {
+
+    }
 
     // Use this for initialization
     void Start()
     {
-        int ARGH = GameObject.FindGameObjectsWithTag("Player").Length / 4;
+        mpi_PlayersCount = GameObject.FindGameObjectsWithTag("Player").Length / 4;
 
         // Daten zur Verarbeitung des Spawns müssen vom Server übermittelt werden!
-        SpawnSorter SSS = new SpawnSorter(2, true, true, true, true);
-        SpawnSorter SpawnEnemys = SpawnThemAll(ARGH);
+        // SpawnSorter SSS = new SpawnSorter(2, true, true, true, true);
+        mpi_SpawnRegulation = SpawnThemAll(mpi_PlayersCount);
 
-        mpi_Spawns = GetPointsToSpawn(SpawnEnemys);
+        mpi_Spawns = GetPointsToSpawn(mpi_SpawnRegulation);
+
+        // Alle Listen mit Positionen für den korrekten Spawn der Wellen, kann hier
+        // korrekt und anständig angelegt werden. Siehe funktion. (per STRG + F12) XD
+        AdjustSpawners();
     }
 
     // Update is called once per frame
     [ServerCallback]
     void Update()
     {
+        // Anzahl der Spieler aktell halten.
+        mpi_PlayersCount = GameObject.FindGameObjectsWithTag("Player").Length / 4;
+
+        // SpawnSorter aktuell halten
+        mpi_SpawnRegulation = SpawnThemAll(mpi_PlayersCount);
+
+        // Liste mit Spawns aktualisieren
+        mpi_Spawns = GetPointsToSpawn(mpi_SpawnRegulation);
+
         // Timer für den Spawnzyklus der Gegner wird gleichmäßig erhöht :D
         mpi_SpawnTimer += 0.1f * Time.deltaTime;
 
         // Wenn die Spanzeit erreicht wurde...
+
+        //##########################################################################################
+        // Hier ist der Timer. Wenn diese zeit erreicht wurde, dann kommen die Waves 
         if (mpi_SpawnTimer >= 0.5f)
         {
             ARSCH = true;
@@ -66,11 +100,12 @@ public class Enemy_Spawn : NetworkBehaviour
         if (ARSCH)
         {
             StartCoroutine(EnemySpawnInSeconds(1));
+            
             ARSCH = false;
         }
     }
 
-    
+
     public Vector3[] GetPointsToSpawn(SpawnSorter _s)
     {
         Vector3[] SpawnItNow = new Vector3[_s.MaxSpawners];
@@ -119,25 +154,31 @@ public class Enemy_Spawn : NetworkBehaviour
     IEnumerator EnemySpawnInSeconds(float _seconds)
     {
         yield return new WaitForSeconds(_seconds);
+        
+        // Für jeden Vector3 in der Liste der Spawner
+            foreach (Vector3 V in mpi_Spawns)
+            {
+                // Erstelle eine Liste mit alternativen Vectoren
+                List<Vector3> AltSpawns = SpawnProtection(V);
 
-        //// Wenn die Gegner spawnen können
-        foreach (Vector3 V in mpi_Spawns)
-        {
-            // Für jeden einzelnen existierenden Spawner werden nun Gegner gespawnt. Die Anzahl der zu spawnenden
-            // Gegner wird per Zufall festgelegt und nach und nach freigesetzt
+                // Für jeden Vector3 in der Liste, die gerade aus V erstellt wurde
+                foreach (Vector3 AltVec in AltSpawns)
+                {
+                    // Zufallsvariable für spawn der Monster
+                    int rndCount = Random.Range(0,11);
 
-            int rnd = Random.Range(0, mpu_MaxEnemys);
+                    if (rndCount >= 8)
+                    {
+                        // Für jeden einzelnen existierenden Spawner werden nun Gegner gespawnt. Die Anzahl der zu spawnenden
+                        // Gegner wird per Zufall festgelegt und nach und nach freigesetzt
 
-            GameObject GO = Instantiate(mpu_ObjMonsters[rnd], V, Quaternion.identity);
-            NetworkServer.Spawn(GO);
-        }
+                        int rnd = Random.Range(0, mpu_MaxEnemys);
 
-        // Wenn spieler 1 aktiv ist und der Spawner gesetzt...
-        if (mpi_Spawns[0] != null)
-        {
-
-        }
-
+                        GameObject GO = Instantiate(mpu_ObjMonsters[rnd], AltVec, Quaternion.identity);
+                        NetworkServer.Spawn(GO);
+                    }
+                }
+            }
     }
 
     private SpawnSorter SpawnThemAll(int _MaxPlayers)
@@ -181,4 +222,41 @@ public class Enemy_Spawn : NetworkBehaviour
         // Kehre jetzt um!
         return Now;
     }
+
+    private List<Vector3> SpawnProtection(Vector3 _CurrentSpawnPoint)
+    {
+        List<Vector3> SpawnPoints = new List<Vector3>();
+
+        SpawnPoints.Add(new Vector3(_CurrentSpawnPoint.x + 1, _CurrentSpawnPoint.y, _CurrentSpawnPoint.z));
+        SpawnPoints.Add(new Vector3(_CurrentSpawnPoint.x - 1, _CurrentSpawnPoint.y, _CurrentSpawnPoint.z));
+        SpawnPoints.Add(new Vector3(_CurrentSpawnPoint.x, _CurrentSpawnPoint.y, _CurrentSpawnPoint.z + 1));
+        SpawnPoints.Add(new Vector3(_CurrentSpawnPoint.x + 1, _CurrentSpawnPoint.y, _CurrentSpawnPoint.z - 1));
+        SpawnPoints.Add(new Vector3(_CurrentSpawnPoint.x - 1, _CurrentSpawnPoint.y, _CurrentSpawnPoint.z + 1));
+
+        return SpawnPoints;
+    }
+
+    private void AdjustSpawners()
+    {
+        if (mpi_Spawns[0] != null && mpi_SpawnPositionsAtPoint_1 != null)
+        {
+            mpi_SpawnPositionsAtPoint_1 = SpawnProtection(mpi_Spawns[0]);
+        }
+
+        if (mpi_Spawns[1] != null && mpi_SpawnPositionsAtPoint_2 != null)
+        {
+            mpi_SpawnPositionsAtPoint_2 = SpawnProtection(mpi_Spawns[1]);
+        }
+
+        if (mpi_Spawns[2] != null && mpi_SpawnPositionsAtPoint_3 != null)
+        {
+            mpi_SpawnPositionsAtPoint_3 = SpawnProtection(mpi_Spawns[2]);
+        }
+
+        if (mpi_Spawns[3] != null && mpi_SpawnPositionsAtPoint_4 != null)
+        {
+            mpi_SpawnPositionsAtPoint_4 = SpawnProtection(mpi_Spawns[3]);
+        }
+    }
+
 }

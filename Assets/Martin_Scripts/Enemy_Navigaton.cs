@@ -64,28 +64,20 @@ public class Enemy_Navigaton : NetworkBehaviour
         {
             mpi_Agent.SetDestination(mpu_Target.position);
         }
-
-        if (isServer)
-        {
-            Debug.Log("Server: " + mpu_Target);
-        }
-
-        if (isClient)
-        {
-            Debug.Log("Client: " + mpu_Target);
-        }
-
     }
 
     private void UpdateTarget()
     {
         // ( Ziel leer         || Ziel nicht in der Liste)
-        if (mpu_Target == null || !CheckIfTargetContains())
+        if (mpu_Target == null || !CheckIfTargetContains(mpu_Target.gameObject.tag))
         {
             Debug.Log("Oben");
             if (mpi_ET.mpu_Players.Count > 0)
             {
-                mpu_Target = mpi_ET.mpu_Players[0].PlayerObject.transform;
+                if (mpi_ET.mpu_Players[0].PlayerObject != null)
+                {
+                    mpu_Target = mpi_ET.mpu_Players[0].PlayerObject.transform;
+                }
             }
         }
         else
@@ -95,12 +87,12 @@ public class Enemy_Navigaton : NetworkBehaviour
         }
     }
 
-    private bool CheckIfTargetContains()
+    private bool CheckIfTargetContains(string _Tag)
     {
         // Falls ein Element in der Liste mit Spielern das Ziel enthält...
         foreach (Enemy_Targeting.TargetInfoData TID in mpi_ET.mpu_Players)
         {
-            if (TID.PlayerObject.tag == mpu_Target.gameObject.tag)
+            if (TID.PlayerObject.tag == _Tag)
             {
                 return true;
             }
