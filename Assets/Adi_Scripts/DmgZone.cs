@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 public class DmgZone : NetworkBehaviour
 {
     private Rigidbody m_EnemyRigidbody;
-    private int m_defaultvelocity = 0;
+    
 	// Use this for initialization
 	void Awake ()
 	{
@@ -18,6 +18,8 @@ public class DmgZone : NetworkBehaviour
 	{
 		
 	}
+
+    [ServerCallback]
 
     void OnTriggerExit(Collider _other)
     {
