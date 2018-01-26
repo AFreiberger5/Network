@@ -17,7 +17,7 @@ public class ObjectSpawner : NetworkBehaviour
     {
         if (isServer)
         {
-            InvokeRepeating("RpcOrbSpawner", 10, 20);
+            //InvokeRepeating("RpcOrbSpawner", 10, 20);
 
         }
     }
