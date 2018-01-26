@@ -9,7 +9,7 @@ TagManager:
   - hitFX
   - MainCanvas
   - Pick Up
-  - InfoPanel
+  - Enemy
   layers:
   - Default
   - TransparentFX
