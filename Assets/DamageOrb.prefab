@@ -22,8 +22,8 @@ GameObject:
   - component: {fileID: 33007529133578438}
   - component: {fileID: 135727995957848600}
   - component: {fileID: 23748234207407642}
-  - component: {fileID: 114624892107238704}
   - component: {fileID: 114156727613403596}
+  - component: {fileID: 114133583197637314}
   m_Layer: 0
   m_Name: DamageOrb
   m_TagString: Pick Up
@@ -38,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1334016441451814}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.66271, y: 9.207421, z: 14.982769}
+  m_LocalPosition: {x: -5.768708, y: 0.81075, z: 1.3122396}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -85,6 +85,19 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1334016441451814}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114133583197637314
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1334016441451814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1da3eda98f7d0034aaee35f41dcde77e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_collisionTags:
+  - Player
 --- !u!114 &114156727613403596
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -117,19 +130,6 @@ MonoBehaviour:
     i15: 121
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
---- !u!114 &114624892107238704
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1334016441451814}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 388df01746457464d8df5f5ee64d3edc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_collisionTags:
-  - Player
 --- !u!135 &135727995957848600
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -137,7 +137,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1334016441451814}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
