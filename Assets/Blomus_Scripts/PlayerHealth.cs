@@ -48,6 +48,7 @@ public class PlayerHealth : NetworkBehaviour
     {
         if (m_healthSlider != null)
         {
+            m_currentHealth = _value;
             m_healthSlider.value = m_currentHealth;
         }
     }
@@ -59,11 +60,12 @@ public class PlayerHealth : NetworkBehaviour
 
     public void Damage(float _dmg)
     {
-        if (!isServer)
-        {
-            return;
-        }
+       // if (!isServer)
+       // {
+       //     return;
+       // }
         m_currentHealth += _dmg;
+        m_healthSlider.value = m_currentHealth;
 
         if (m_currentHealth <= 0 && !m_isDead)
         {
@@ -107,5 +109,13 @@ public class PlayerHealth : NetworkBehaviour
         m_currentHealth = m_maxHealth;
         SetActiveState(true);
         m_isDead = false;
+    }
+
+    private void OnDestroy()
+    {
+        if (m_healthSlider != null)
+        {
+            Destroy(m_healthSlider);
+        }
     }
 }
