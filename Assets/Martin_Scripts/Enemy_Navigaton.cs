@@ -8,7 +8,9 @@ using UnityEngine.Networking;
 public class Enemy_Navigaton : NetworkBehaviour
 {
     private GameObject mpu_ObjBaseTarget;
+
     [HideInInspector]
+    [SyncVar]
     public Transform mpu_Target;
     private NavMeshAgent mpi_Agent;
     private Enemy_Targeting mpi_ET;         // Nach Hause telefonieren!
@@ -63,6 +65,16 @@ public class Enemy_Navigaton : NetworkBehaviour
             mpi_Agent.SetDestination(mpu_Target.position);
         }
 
+        if (isServer)
+        {
+            Debug.Log("Server: " + mpu_Target);
+        }
+
+        if (isClient)
+        {
+            Debug.Log("Client: " + mpu_Target);
+        }
+
     }
 
     private void UpdateTarget()
@@ -97,6 +109,7 @@ public class Enemy_Navigaton : NetworkBehaviour
 
         return false;
     }
+
 
     private void UnsetTarget()
     {
@@ -140,4 +153,12 @@ public class Enemy_Navigaton : NetworkBehaviour
         }
     }
 
+    [ServerCallback]
+    private void OnCollisionEnter(Collision _col)
+    {
+        if (_col.gameObject.tag == "Player" || _col.gameObject.tag == "Enemy")
+        {
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+        }
+    }
 }

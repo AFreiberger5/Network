@@ -80,12 +80,11 @@ public class Bullet : NetworkBehaviour
         {
             Debug.Log("Hit");
             Explode();
-            PlayerHealth playerHealth = _col.gameObject.GetComponentInParent<PlayerHealth>();
-            if (playerHealth != null)
-            {
-                playerHealth.Damage(m_damage);
-            }
-        }
+            Enemy_Stats_N_Stuff ESNS = _col.gameObject.GetComponentInParent<Enemy_Stats_N_Stuff>();
+
+            // Instant One-Hit!
+            ESNS.CalculateDamage(-5);
+        }        
     }
     private void OnCollisionEnter(Collision _col)
     {

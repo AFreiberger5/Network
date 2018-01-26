@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(PlayerHealth))]
 [RequireComponent(typeof(PlayerShoot))]
@@ -19,15 +20,22 @@ public class PlayerController : NetworkBehaviour {
     NetworkStartPosition[] m_spawnPoints;
 
     public GameObject m_spawnFx;
-    public float m_dmgMod = 1F;
+
+
+    GameObject m_InfoPanel;
+    private bool m_PanelActive;
+
 	// Use this for initialization
 	void Start ()
-    {
+    {        
         m_pHealth = GetComponent<PlayerHealth>();
         m_pShoot = GetComponent<PlayerShoot>();
         m_pMotor = GetComponent<PlayerMotor>();
         m_pSetup = GetComponent<PlayerSetup>();
-	}
+
+        m_InfoPanel = GameObject.FindGameObjectWithTag("InfoPanel");
+
+    }
 
     public override void OnStartLocalPlayer()
     {
@@ -57,8 +65,9 @@ public class PlayerController : NetworkBehaviour {
 
         if (Input.GetMouseButtonDown(0))
         {
-            m_pShoot.Shoot(m_dmgMod);
+            m_pShoot.Shoot();
         }
+                
 
         Vector3 inputDirection = GetInput();
 
@@ -69,6 +78,15 @@ public class PlayerController : NetworkBehaviour {
 
         Vector3 turretDir = Utility.ScreenToWorldPoint(Input.mousePosition, m_pMotor.m_turret.position.y) - m_pMotor.m_turret.position;
         m_pMotor.RotateTurret(turretDir);
+
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+            m_PanelActive = true;
+
+        if (Input.GetKeyUp(KeyCode.Tab))
+            m_PanelActive = false;
+        
+
     }
 
     Vector3 GetInput()
@@ -108,5 +126,25 @@ public class PlayerController : NetworkBehaviour {
             }
         }
         return m_originalPosition;
+    }
+
+    void UpdateUI(bool _panelActive)
+    {
+        if(_panelActive == m_InfoPanel.activeInHierarchy)
+        {
+            return;
+        }
+
+        if (m_InfoPanel.activeInHierarchy == true)
+        {
+            m_InfoPanel.SetActive(false);
+            return;
+        }
+
+        if (m_InfoPanel.activeInHierarchy == false)
+            m_InfoPanel.SetActive(true);
+        
+
+
     }
 }

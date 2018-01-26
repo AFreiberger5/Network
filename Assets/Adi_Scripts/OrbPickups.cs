@@ -10,13 +10,14 @@ public class OrbPickups : NetworkBehaviour
     private int m_damage = 5;
 
 
-    void OnCollisionEnter(Collision _col)
+    private void OnTriggerEnter(Collider _col)
     {
         CheckCollisions(_col);
     }
-    void CheckCollisions(Collision _col)
+
+    void CheckCollisions(Collider _col)
     {
-        if (m_collisionTags.Contains(_col.collider.tag))
+        if (m_collisionTags.Contains(_col.gameObject.tag))
         {
             
             PlayerHealth playerHealth = _col.gameObject.GetComponentInParent<PlayerHealth>();
