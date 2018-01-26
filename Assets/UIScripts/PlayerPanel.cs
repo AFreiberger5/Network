@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class PlayerPanel : NetworkBehaviour
 {
@@ -21,6 +22,19 @@ public class PlayerPanel : NetworkBehaviour
 	}
 	void AddPlayers()
     {
+        GameObject go;
+
+        foreach (PlayerPanelEntry ppe in m_players)
+        {
+            //script is on parent, parent has allignment group so it will automatically moved into the correct place
+            
+            go = Instantiate(m_EntryPrefab, transform) as GameObject;
+
+            go.transform.GetChild(0).GetComponent<Text>().text = ppe.m_Name;
+            go.transform.GetChild(1).GetComponent<Text>().text = ppe.m_Score.ToString();
+            //todo: change 100 to players HP variable
+            go.transform.GetChild(2).GetComponent<Text>().text = "100";
+        }
 
     }
        
