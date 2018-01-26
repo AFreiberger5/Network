@@ -14,9 +14,10 @@ public class Bullet : NetworkBehaviour
     public float m_damage = -5f;
     public float m_lifetime = 2f;
     List<ParticleSystem> m_allParticles;
-    public List<string> m_collisionTags;
+    public List<string> m_collisionTags; //List gets filled in Editor for easier workflow
     public ParticleSystem m_exploFx;
 
+    private NetworkInstanceId m_netId;
     // Use this for initialization
     void Start()
     {
@@ -39,7 +40,12 @@ public class Bullet : NetworkBehaviour
         m_damage *= _dmgValue;
 
     }
-    
+    public void SetPlayerReference(NetworkInstanceId _netID)
+    {
+        m_netId = _netID;
+        Debug.Log(m_netId + " thats the id");
+    }
+
     IEnumerator SelfDestruct()
     {
         yield return new WaitForSeconds(m_lifetime);
@@ -76,15 +82,26 @@ public class Bullet : NetworkBehaviour
 
     void CheckCollisions(Collision _col)
     {
+
         if (m_collisionTags.Contains(_col.collider.tag))
         {
+            
+                //Find Player that shot the bullet if target was it
+                PlayerController m_playerID = FindObjectsOfType<PlayerController>().Where(o => o.netId == m_netId).FirstOrDefault();
+            FindObjectsOfType<PlayerController>().ToList().ForEach(o => Debug.Log(o.m_dmgMod + "dmmmg"));
+            //Add points; todo: points depending on enemytype hit(- when player got hit?)
+            
+            m_playerID.GetComponent<PlayerHealth>().GetScorePoints(5);
+            
+            
+
             Debug.Log("Hit");
             Explode();
             Enemy_Stats_N_Stuff ESNS = _col.gameObject.GetComponentInParent<Enemy_Stats_N_Stuff>();
 
             // Instant One-Hit!
             ESNS.CalculateDamage(-5);
-        }        
+        }
     }
     private void OnCollisionEnter(Collision _col)
     {

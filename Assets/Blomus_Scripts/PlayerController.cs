@@ -25,16 +25,19 @@ public class PlayerController : NetworkBehaviour
 
     GameObject m_InfoPanel;
     private bool m_PanelActive;
+    private NetworkInstanceId m_netID;
 
     // Use this for initialization
     void Start()
     {
+            
         m_pHealth = GetComponent<PlayerHealth>();
         m_pShoot = GetComponent<PlayerShoot>();
         m_pMotor = GetComponent<PlayerMotor>();
         m_pSetup = GetComponent<PlayerSetup>();
 
         m_InfoPanel = GameObject.FindGameObjectWithTag("InfoPanel");
+        m_netID = this.netId;
 
     }
 
@@ -66,7 +69,8 @@ public class PlayerController : NetworkBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            m_pShoot.Shoot(m_dmgMod);
+            Debug.Log(m_netID + " thats the id");
+            m_pShoot.Shoot(m_dmgMod, m_netID);
         }
 
 

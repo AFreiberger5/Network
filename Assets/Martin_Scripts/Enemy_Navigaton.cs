@@ -65,16 +65,7 @@ public class Enemy_Navigaton : NetworkBehaviour
             mpi_Agent.SetDestination(mpu_Target.position);
         }
 
-        if (isServer)
-        {
-            Debug.Log("Server: " + mpu_Target);
-        }
-
-        if (isClient)
-        {
-            Debug.Log("Client: " + mpu_Target);
-        }
-
+       
     }
 
     private void UpdateTarget()
@@ -82,7 +73,7 @@ public class Enemy_Navigaton : NetworkBehaviour
         // ( Ziel leer         || Ziel nicht in der Liste)
         if (mpu_Target == null || !CheckIfTargetContains())
         {
-            Debug.Log("Oben");
+           // Debug.Log("Oben");
             if (mpi_ET.mpu_Players.Count > 0)
             {
                 mpu_Target = mpi_ET.mpu_Players[0].PlayerObject.transform;
@@ -90,7 +81,7 @@ public class Enemy_Navigaton : NetworkBehaviour
         }
         else
         {
-            Debug.Log("Unten");
+           // Debug.Log("Unten");
             mpu_Target = mpu_ObjBaseTarget.transform;
         }
     }

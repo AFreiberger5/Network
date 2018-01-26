@@ -20,8 +20,10 @@ public class PlayerHealth : NetworkBehaviour
     public Slider m_healthSliderPrefab;
     public Slider m_healthSlider;
 
-    private float m_damageTaken;
-    private float m_healthHealed;
+    public float m_damageTaken;
+    public float m_healthHealed;
+    [SyncVar]
+    public int m_Score = 0;
 
     public override void OnStartClient() // nach einem Delay nach Clienverbindungen zwingen die SyncVars auch anzuzeigen
     {
@@ -37,7 +39,7 @@ public class PlayerHealth : NetworkBehaviour
         m_healthSlider = Instantiate(m_healthSliderPrefab, Vector3.zero, Quaternion.identity) as Slider;
         m_healthSlider.transform.SetParent(canvas.transform);
         Reset();
-        
+
     }
 
     // Update is called once per frame
@@ -66,10 +68,10 @@ public class PlayerHealth : NetworkBehaviour
         //add all damage taken/health gained to display on UI
         m_healthHealed = (_dmg > 0) ? m_healthHealed + _dmg : m_healthHealed;
         m_damageTaken = (_dmg < 0) ? m_damageTaken + -_dmg : m_damageTaken;
-       // if (!isServer)
-       // {
-       //     return;
-       // }
+        // if (!isServer)
+        // {
+        //     return;
+        // }
         m_currentHealth += _dmg;
         m_healthSlider.value = m_currentHealth;
 
@@ -123,5 +125,11 @@ public class PlayerHealth : NetworkBehaviour
         {
             Destroy(m_healthSlider.gameObject);
         }
+    }
+
+    public void GetScorePoints(int _points)
+    {
+        m_Score += _points;
+        Debug.Log(m_Score);
     }
 }
