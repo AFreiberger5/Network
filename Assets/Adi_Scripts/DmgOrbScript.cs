@@ -12,7 +12,7 @@ public class DmgOrbScript : NetworkBehaviour
 
 
 
-    private void OnCollisionEnter(Collider _col)
+    private void OnTriggerEnter(Collider _col)
     {
         CheckCollisions(_col);
     }
