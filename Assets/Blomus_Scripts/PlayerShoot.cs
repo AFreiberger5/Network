@@ -13,6 +13,8 @@ public class PlayerShoot : NetworkBehaviour {
 
     private int m_shotsLeft;
     private bool m_isReloading;
+    public float m_dmgMod = 1f;
+    public bool m_modBool = false;
 
 
 	// Use this for initialization
@@ -28,14 +30,14 @@ public class PlayerShoot : NetworkBehaviour {
 		
 	}
 
-    public void Shoot()
+    public void Shoot(float _dmgValue)
     {
         if (m_isReloading || m_bulletPrefab == null)
         {
             return;
         }
 
-        CmdShoot();
+        CmdShoot(_dmgValue);
 
         m_shotsLeft--;
         if (m_shotsLeft <= 0)
@@ -46,31 +48,33 @@ public class PlayerShoot : NetworkBehaviour {
     }
 
     [Command]
-    private void CmdShoot()
+    private void CmdShoot(float _dmgValue)
     {
-        CreateBullet();
-        RpcCreateBullet();
+        CreateBullet(_dmgValue);
+        RpcCreateBullet(_dmgValue);
     }
 
     [ClientRpc]
-    void RpcCreateBullet()
+    void RpcCreateBullet(float _dmgValue)
     {
         if (!isServer)
         {
-            CreateBullet();
+            CreateBullet(_dmgValue);
         }
     }
 
-    void CreateBullet()
+    void CreateBullet(float _dmgValue)
     {
         Bullet bullet = null;
         bullet = m_bulletPrefab.GetComponent<Bullet>();
 
         Rigidbody rbody = Instantiate(m_bulletPrefab, m_bulletSpawn.position, m_bulletSpawn.rotation) as Rigidbody;
+        rbody.GetComponentInParent<Bullet>().DmgChange(_dmgValue);
 
         if (rbody != null)
         {
             rbody.velocity = bullet.m_speed * m_bulletSpawn.transform.forward;
+            
         }
     }
 
