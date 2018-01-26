@@ -19,7 +19,7 @@ public class PlayerController : NetworkBehaviour {
     NetworkStartPosition[] m_spawnPoints;
 
     public GameObject m_spawnFx;
-
+    public float m_dmgMod = 1F;
 	// Use this for initialization
 	void Start ()
     {
@@ -57,7 +57,7 @@ public class PlayerController : NetworkBehaviour {
 
         if (Input.GetMouseButtonDown(0))
         {
-            m_pShoot.Shoot();
+            m_pShoot.Shoot(m_dmgMod);
         }
 
         Vector3 inputDirection = GetInput();
