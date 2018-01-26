@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(PlayerHealth))]
 [RequireComponent(typeof(PlayerShoot))]
 [RequireComponent(typeof(PlayerMotor))]
 [RequireComponent(typeof(PlayerSetup))]
 
-public class PlayerController : NetworkBehaviour {
+public class PlayerController : NetworkBehaviour
+{
 
     PlayerHealth m_pHealth;
     PlayerShoot m_pShoot;
@@ -19,15 +21,22 @@ public class PlayerController : NetworkBehaviour {
     NetworkStartPosition[] m_spawnPoints;
 
     public GameObject m_spawnFx;
+    public float m_dmgMod = 1f;
 
-	// Use this for initialization
-	void Start ()
+    GameObject m_InfoPanel;
+    private bool m_PanelActive;
+
+    // Use this for initialization
+    void Start()
     {
         m_pHealth = GetComponent<PlayerHealth>();
         m_pShoot = GetComponent<PlayerShoot>();
         m_pMotor = GetComponent<PlayerMotor>();
         m_pSetup = GetComponent<PlayerSetup>();
-	}
+
+        m_InfoPanel = GameObject.FindGameObjectWithTag("InfoPanel");
+
+    }
 
     public override void OnStartLocalPlayer()
     {
@@ -52,23 +61,34 @@ public class PlayerController : NetworkBehaviour {
     {
         if (!isLocalPlayer || m_pHealth.m_isDead)
         {
-            return;       
+            return;
         }
 
         if (Input.GetMouseButtonDown(0))
         {
-            m_pShoot.Shoot();
+            m_pShoot.Shoot(m_dmgMod);
         }
+
 
         Vector3 inputDirection = GetInput();
 
-        if ( inputDirection.sqrMagnitude > 0.25f)
+        if (inputDirection.sqrMagnitude > 0.25f)
         {
             m_pMotor.RotateChassis(inputDirection);
         }
 
         Vector3 turretDir = Utility.ScreenToWorldPoint(Input.mousePosition, m_pMotor.m_turret.position.y) - m_pMotor.m_turret.position;
         m_pMotor.RotateTurret(turretDir);
+
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+            UpdateUI(true);
+
+
+        if (Input.GetKeyUp(KeyCode.Tab))
+            UpdateUI(false);
+
+
     }
 
     Vector3 GetInput()
@@ -108,5 +128,24 @@ public class PlayerController : NetworkBehaviour {
             }
         }
         return m_originalPosition;
+    }
+
+    void UpdateUI(bool _panelActive)
+    {
+        //return if somehow key got pressed/released twice or similar
+        if (_panelActive == m_InfoPanel.activeInHierarchy)
+            return;
+
+
+        if (m_InfoPanel.activeInHierarchy == true)
+        {
+            m_InfoPanel.SetActive(false);
+            return;
+        }
+        else
+            m_InfoPanel.SetActive(true);
+
+        //update UI, display ping and own stats
+
     }
 }

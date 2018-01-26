@@ -17,20 +17,29 @@ public class Bullet : NetworkBehaviour
     public List<string> m_collisionTags;
     public ParticleSystem m_exploFx;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start()
     {
         m_allParticles = GetComponentsInChildren<ParticleSystem>().ToList();
         m_rigidbody = GetComponent<Rigidbody>();
         m_collider = GetComponent<Collider>();
         StartCoroutine("SelfDestruct");
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+        Debug.Log(m_damage);
+    }
 
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    public void DmgChange(float _dmgValue)
+    {
+
+        m_damage *= _dmgValue;
+
+    }
+    
     IEnumerator SelfDestruct()
     {
         yield return new WaitForSeconds(m_lifetime);
@@ -39,6 +48,7 @@ public class Bullet : NetworkBehaviour
 
     private void Explode()
     {
+        Debug.Log(m_damage + "on explo");
         m_collider.enabled = false;
         m_rigidbody.velocity = Vector3.zero;
         m_rigidbody.Sleep();
@@ -53,15 +63,15 @@ public class Bullet : NetworkBehaviour
             m_exploFx.Play();
         }
 
-       // if (isServer)
+        // if (isServer)
         //{
-            foreach (MeshRenderer m in GetComponentsInChildren<MeshRenderer>())
-            {
-                m.enabled = false;
-            }
+        foreach (MeshRenderer m in GetComponentsInChildren<MeshRenderer>())
+        {
+            m.enabled = false;
+        }
 
-            Destroy(gameObject);
-       // }
+        Destroy(gameObject);
+        // }
     }
 
     void CheckCollisions(Collision _col)
