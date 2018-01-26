@@ -727,7 +727,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 127.0.0.
+  m_Text: 127.0.0.1
 --- !u!222 &908335873
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -844,7 +844,7 @@ MonoBehaviour:
   m_ScriptCRCCheck: 1
   m_MaxDelay: 0.01
   m_LogLevel: 2
-  m_PlayerPrefab: {fileID: 1706831602771706, guid: 295d8e26da59a354e94b4be5747f69eb,
+  m_PlayerPrefab: {fileID: 1045980327082630, guid: 3fad092ad28b1e34cafeea26084daf91,
     type: 2}
   m_AutoCreatePlayer: 1
   m_PlayerSpawnMethod: 1

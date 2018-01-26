@@ -7,7 +7,7 @@ public class ObjectSpawner : NetworkBehaviour
 {
 
 
-    public GameObject Healthorb;
+    public GameObject DmgOrb;
     //private float spawndelay = 5f;
     private Vector3 spawpos;
 
@@ -32,7 +32,7 @@ public class ObjectSpawner : NetworkBehaviour
         spawpos.y = 1;
         spawpos.z = Random.Range(-5, 5);
 
-        GameObject go = Instantiate(Healthorb, spawpos, Quaternion.identity);
+        GameObject go = Instantiate(DmgOrb, spawpos, Quaternion.identity);
         NetworkServer.Spawn(go);
 
 
