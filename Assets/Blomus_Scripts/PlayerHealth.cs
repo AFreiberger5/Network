@@ -115,7 +115,7 @@ public class PlayerHealth : NetworkBehaviour
     {
         if (m_healthSlider != null)
         {
-            Destroy(m_healthSlider);
+            Destroy(m_healthSlider.gameObject);
         }
     }
 }
