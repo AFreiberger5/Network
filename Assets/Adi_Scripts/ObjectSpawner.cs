@@ -8,7 +8,6 @@ public class ObjectSpawner : NetworkBehaviour
 
 
     public GameObject DmgOrb;
-    //private float spawndelay = 5f;
     private Vector3 spawpos;
 
     // Use this for initialization
@@ -18,8 +17,7 @@ public class ObjectSpawner : NetworkBehaviour
         if (isServer)
         {
             //GameObject wird immer nach gewisser zeit mit gewisser tickrate
-            InvokeRepeating("RpcOrbSpawner", 10, 20);
-
+            InvokeRepeating("RpcOrbSpawner", 10, 15);
         }
     }
 
@@ -34,8 +32,5 @@ public class ObjectSpawner : NetworkBehaviour
 
         GameObject go = Instantiate(DmgOrb, spawpos, Quaternion.identity);
         NetworkServer.Spawn(go);
-
-
-
     }
 }

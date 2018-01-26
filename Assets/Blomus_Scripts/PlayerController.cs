@@ -20,6 +20,7 @@ public class PlayerController : NetworkBehaviour {
     NetworkStartPosition[] m_spawnPoints;
 
     public GameObject m_spawnFx;
+    public float m_dmgMod = 1f;
 
 
     GameObject m_InfoPanel;
@@ -65,7 +66,7 @@ public class PlayerController : NetworkBehaviour {
 
         if (Input.GetMouseButtonDown(0))
         {
-            m_pShoot.Shoot();
+            m_pShoot.Shoot(m_dmgMod);
         }
                 
 

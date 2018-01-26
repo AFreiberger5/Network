@@ -10,6 +10,7 @@ TagManager:
   - MainCanvas
   - Pick Up
   - Enemy
+  - InfoPanel
   layers:
   - Default
   - TransparentFX
