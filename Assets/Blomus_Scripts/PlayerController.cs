@@ -46,6 +46,8 @@ public class PlayerController : NetworkBehaviour
         base.OnStartLocalPlayer();
         m_spawnPoints = GameObject.FindObjectsOfType<NetworkStartPosition>();
         m_originalPosition = transform.position;
+        //on connect add playerdata to list to use it for ui
+        FindObjectOfType<DataScript>().m_players.Add(this);
 
     }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using System.Linq;
 
 
 public class PlayerHealth : NetworkBehaviour
@@ -130,6 +131,9 @@ public class PlayerHealth : NetworkBehaviour
     public void GetScorePoints(int _points)
     {
         m_Score += _points;
-        Debug.Log(m_Score);
+        //trying to find the playerpanel of the player, no list availible so have to search it manually
+        FindObjectsOfType<PlayerPanel>().
+            Where(o => o.GetComponentInChildren<PlayerPanelEntry>().m_Player.GetHashCode() == GetComponent<PlayerController>()
+            .GetHashCode()).FirstOrDefault().GetComponentsInChildren<Text>().Where(o => o.tag == "Score").FirstOrDefault().text = m_Score.ToString();
     }
 }

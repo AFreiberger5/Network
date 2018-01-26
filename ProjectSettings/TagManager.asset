@@ -12,6 +12,7 @@ TagManager:
   - Enemy
   - InfoPanel
   - Pickup
+  - Score
   layers:
   - Default
   - TransparentFX

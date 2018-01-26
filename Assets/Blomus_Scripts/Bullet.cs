@@ -85,15 +85,14 @@ public class Bullet : NetworkBehaviour
 
         if (m_collisionTags.Contains(_col.collider.tag))
         {
-            
-                //Find Player that shot the bullet if target was it
-                PlayerController m_playerID = FindObjectsOfType<PlayerController>().Where(o => o.netId == m_netId).FirstOrDefault();
+
+            //Find Player that shot the bullet if target was it
+            PlayerController m_playerID = FindObjectsOfType<PlayerController>().Where(o => o.netId == m_netId).FirstOrDefault();
             FindObjectsOfType<PlayerController>().ToList().ForEach(o => Debug.Log(o.m_dmgMod + "dmmmg"));
             //Add points; todo: points depending on enemytype hit(- when player got hit?)
-            
             m_playerID.GetComponent<PlayerHealth>().GetScorePoints(5);
-            
-            
+
+
 
             Debug.Log("Hit");
             Explode();

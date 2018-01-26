@@ -22,4 +22,10 @@ public class UIEnemyPanel : MonoBehaviour
         EnemyMessageBox.text = m_enemyMessage;
         EnemyMessageBox.enabled = true;
     }
+
+    //CAlled from enemy scripts whenever wave spawned sucessfully
+    public void OnWaveSpawned()
+    {
+        EnemyMessageBox.enabled = false;
+    }
 }
