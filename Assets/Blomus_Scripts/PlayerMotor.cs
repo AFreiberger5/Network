@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerMotor : NetworkBehaviour {
+public class PlayerMotor : NetworkBehaviour
+{
 
     public Rigidbody m_rigidbody;
 
@@ -18,13 +19,12 @@ public class PlayerMotor : NetworkBehaviour {
 
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         m_rigidbody = GetComponent<Rigidbody>();
+    }
 
-	}
-	
-	public void MovePlayer(Vector3 _dir)
+    public void MovePlayer(Vector3 _dir)
     {
         Vector3 moveDirection = _dir * m_moveSpeed * Time.deltaTime;
         m_rigidbody.velocity = moveDirection;
@@ -39,7 +39,7 @@ public class PlayerMotor : NetworkBehaviour {
         }
     }
 
-    public void RotateChassis (Vector3 _dir)
+    public void RotateChassis(Vector3 _dir)
     {
         FaceDirection(m_chassis, _dir, m_chassisRotSpeed);
     }

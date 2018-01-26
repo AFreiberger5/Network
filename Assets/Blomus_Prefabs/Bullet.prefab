@@ -210,7 +210,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1759744307106042}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -31.704212, y: 0.252, z: 19.082794}
+  m_LocalPosition: {x: 3.2449384, y: 12.69425, z: 3.030569}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4210003537914776}
@@ -341,9 +341,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_speed: 20
-  m_damage: -1
+  m_damage: -5
   m_lifetime: 2
-  m_collisionTags: []
+  m_collisionTags:
+  - Enemy
   m_exploFx: {fileID: 198466470678868152}
 --- !u!114 &114401774814153214
 MonoBehaviour:

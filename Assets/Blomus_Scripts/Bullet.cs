@@ -11,7 +11,7 @@ public class Bullet : NetworkBehaviour
     Rigidbody m_rigidbody;
     Collider m_collider;
     public int m_speed = 20;
-    public float m_damage = -1f;
+    public float m_damage = -5f;
     public float m_lifetime = 2f;
     List<ParticleSystem> m_allParticles;
     public List<string> m_collisionTags;
@@ -68,12 +68,12 @@ public class Bullet : NetworkBehaviour
     {
         if (m_collisionTags.Contains(_col.collider.tag))
         {
+            Debug.Log("Hit");
             Explode();
-            PlayerHealth playerHealth = _col.gameObject.GetComponentInParent<PlayerHealth>();
-            if (playerHealth != null)
-            {
-                playerHealth.Damage(m_damage);
-            }
+            Enemy_Stats_N_Stuff ESNS = _col.gameObject.GetComponentInParent<Enemy_Stats_N_Stuff>();
+
+            // Instant One-Hit!
+            ESNS.CalculateDamage(-5);
         }        
     }
     private void OnCollisionEnter(Collision _col)

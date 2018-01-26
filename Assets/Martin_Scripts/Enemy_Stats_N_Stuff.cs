@@ -13,13 +13,9 @@ public class Enemy_Stats_N_Stuff : NetworkBehaviour
     private float mpi_Defense = 15;
     private Enemy_Navigaton mpi_Enav;
 
-    public GameObject mpu_ObjCenter;
-    public GameObject mpu_ObjFistAnkle;
-    public GameObject mpu_ObjFistAnkleLeft;
-    public GameObject mpu_ObjFistAnkleRight;
-    public GameObject mpu_ObjFistLeft;
-    public GameObject mpu_ObjFistRight;
+    private float mpi_CoolDown = 0;
 
+    public List<GameObject> mpu_Loot;
 
     public float mpuP_HP
     {
@@ -47,9 +43,40 @@ public class Enemy_Stats_N_Stuff : NetworkBehaviour
     [ServerCallback]
     void Update()
     {
+        mpi_CoolDown += 0.1f * Time.deltaTime;
+
+        // Timer reset
+        if (mpi_CoolDown >= 2f)
+        {
+            mpi_CoolDown = 0;
+        }
+
         // Auf leben achten. Falls Leben kleiner gleich 0, Gegner tot.
         if (mpuP_HP <= 0)
         {
+            // Gegner muss Loot fallen lassen!
+            int BitteBitteGanzVielLootJa = Random.Range(1,10);
+
+            // Wenn der Zufall es zulässt...
+            if (BitteBitteGanzVielLootJa <= 6)
+            {
+                GameObject GO;
+
+                Vector3 LootPos = new Vector3(transform.position.x, 1, transform.position.z);
+
+                // Noch mehr Aufteilen
+                if (BitteBitteGanzVielLootJa <= 8)
+                {
+                    GO = Instantiate(mpu_Loot[0], LootPos, Quaternion.identity);
+                }
+                else
+                {
+                    GO = Instantiate(mpu_Loot[1], LootPos, Quaternion.identity);
+                }
+
+                NetworkServer.Spawn(GO);
+            }
+
             // Gegner ZERSTÖREN!!!
             Destroy(gameObject);
             OnNetworkDestroy();
@@ -58,39 +85,24 @@ public class Enemy_Stats_N_Stuff : NetworkBehaviour
         // Falls Spieler bzw. Target in HitRange
         if (mpi_Enav.mpu_Target != null)
         {
-            if (GetDistanceTo(mpi_Enav.mpu_Target, gameObject.transform) <= 1.5f)
+            if (GetDistanceTo(mpi_Enav.mpu_Target, gameObject.transform) <= 2.0f && mpi_CoolDown >= 0.2)
             {
-                Attack();
+                Attack(-5);
+                mpi_CoolDown = 0;
             }
         }
     }
 
-    [ServerCallback]
-    private void OnTriggerEnter(Collider _col)
+    public void Attack(float _Damage)
     {
-        if (_col.tag == "Teaball")
-        {
-            // Leben um 1 verringern bei Treffer mit Teekanne!
-            mpuP_HP -= 1;
-        }
+        PlayerHealth PH = mpi_Enav.mpu_Target.GetComponentInParent<PlayerHealth>();
+
+        PH.m_currentHealth += _Damage;
     }
 
-    public void Attack()
+    public void CalculateDamage(float _Damage)
     {
-        // Schlaaaaag!
-        mpu_ObjFistAnkleLeft.transform.Rotate(Vector3.up, 90);
-        // Bewege den arm zurück
-        //mpu_ObjFistAnkleLeft.transform.Rotate(Vector3.up, 90 * Time.deltaTime);
-
-        // entsprechenden Arm bewegen (rotieren)
-        // Wenn dann der Colider der faust einen Spieler trifft
-        // Calculate Dmg
-        // Füge spieler XY den errechneten Schaden zu.
-    }
-
-    public float CalculateDamage()
-    {
-        return 9001f;
+        mpuP_HP += _Damage;
     }
 
     public float GetDistanceTo(Transform _Target, Transform _Start)
@@ -110,5 +122,10 @@ public class Enemy_Stats_N_Stuff : NetworkBehaviour
     public override void OnDeserialize(NetworkReader _reader, bool _initialState)
     {
         mpu_CurrentHP = _reader.ReadInt32();
+    }
+
+    private void DropThatShit()
+    {
+        // Zufällige Chance
     }
 }

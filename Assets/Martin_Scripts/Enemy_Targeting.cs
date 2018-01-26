@@ -45,7 +45,6 @@ public class Enemy_Targeting : NetworkBehaviour
 
             // Fügt die neue TargetInfoData der bestehenden Liste hinzu.
             mpu_Players.Add(tmp);
-            Debug.Log("Player Saved! " + mpu_Players.Count);
         }
     }
 
@@ -54,16 +53,6 @@ public class Enemy_Targeting : NetworkBehaviour
     {
         // Entfernt alle Spieler aus der Liste, die zu weit entfernt sind :D
         mpu_Players.RemoveAll(o => GetDistance(o.PlayerObject.transform.position, gameObject.transform.position) >= RangeDistance);
-
-        float tmp = 0f;
-
-        // Die Entfernung aller Spieler muss immer aktuell gehalten werden, um später damit arbeiten zu können.
-        foreach (TargetInfoData TID in mpu_Players)
-        {
-            tmp = GetDistance(TID.PlayerObject.transform.position, gameObject.transform.position);
-        }
-
-
     }
 
     // Errechnet die Entfernung von zwei Objekten.
