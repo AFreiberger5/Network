@@ -11,6 +11,7 @@ TagManager:
   - Pick Up
   - Enemy
   - InfoPanel
+  - Pickup
   layers:
   - Default
   - TransparentFX
