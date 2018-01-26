@@ -15,6 +15,7 @@ public class UIEnemyPanel : MonoBehaviour
         EnemyMessageBox.enabled = false;
 	}
 	
+    //Called from Enemy scripts whenever player should be warned
 	public void OnWaveSpawn()
     {
         m_enemyMessage = "NEXT WAVE IN <color=red>5</color> SECONDS";

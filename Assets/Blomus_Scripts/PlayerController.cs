@@ -9,7 +9,8 @@ using UnityEngine.UI;
 [RequireComponent(typeof(PlayerMotor))]
 [RequireComponent(typeof(PlayerSetup))]
 
-public class PlayerController : NetworkBehaviour {
+public class PlayerController : NetworkBehaviour
+{
 
     PlayerHealth m_pHealth;
     PlayerShoot m_pShoot;
@@ -25,9 +26,9 @@ public class PlayerController : NetworkBehaviour {
     GameObject m_InfoPanel;
     private bool m_PanelActive;
 
-	// Use this for initialization
-	void Start ()
-    {        
+    // Use this for initialization
+    void Start()
+    {
         m_pHealth = GetComponent<PlayerHealth>();
         m_pShoot = GetComponent<PlayerShoot>();
         m_pMotor = GetComponent<PlayerMotor>();
@@ -60,18 +61,18 @@ public class PlayerController : NetworkBehaviour {
     {
         if (!isLocalPlayer || m_pHealth.m_isDead)
         {
-            return;       
+            return;
         }
 
         if (Input.GetMouseButtonDown(0))
         {
             m_pShoot.Shoot(m_dmgMod);
         }
-                
+
 
         Vector3 inputDirection = GetInput();
 
-        if ( inputDirection.sqrMagnitude > 0.25f)
+        if (inputDirection.sqrMagnitude > 0.25f)
         {
             m_pMotor.RotateChassis(inputDirection);
         }
@@ -81,11 +82,12 @@ public class PlayerController : NetworkBehaviour {
 
 
         if (Input.GetKeyDown(KeyCode.Tab))
-            m_PanelActive = true;
+            UpdateUI(true);
+
 
         if (Input.GetKeyUp(KeyCode.Tab))
-            m_PanelActive = false;
-        
+            UpdateUI(false);
+
 
     }
 
@@ -130,21 +132,20 @@ public class PlayerController : NetworkBehaviour {
 
     void UpdateUI(bool _panelActive)
     {
-        if(_panelActive == m_InfoPanel.activeInHierarchy)
-        {
+        //return if somehow key got pressed/released twice or similar
+        if (_panelActive == m_InfoPanel.activeInHierarchy)
             return;
-        }
+
 
         if (m_InfoPanel.activeInHierarchy == true)
         {
             m_InfoPanel.SetActive(false);
             return;
         }
-
-        if (m_InfoPanel.activeInHierarchy == false)
+        else
             m_InfoPanel.SetActive(true);
-        
 
+        //update UI, display ping and own stats
 
     }
 }

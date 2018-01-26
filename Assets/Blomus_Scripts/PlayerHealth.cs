@@ -20,6 +20,9 @@ public class PlayerHealth : NetworkBehaviour
     public Slider m_healthSliderPrefab;
     public Slider m_healthSlider;
 
+    private float m_damageTaken;
+    private float m_healthHealed;
+
     public override void OnStartClient() // nach einem Delay nach Clienverbindungen zwingen die SyncVars auch anzuzeigen
     {
         base.OnStartClient();
@@ -60,6 +63,9 @@ public class PlayerHealth : NetworkBehaviour
 
     public void Damage(float _dmg)
     {
+        //add all damage taken/health gained to display on UI
+        m_healthHealed = (_dmg > 0) ? m_healthHealed + _dmg : m_healthHealed;
+        m_damageTaken = (_dmg < 0) ? m_damageTaken + -_dmg : m_damageTaken;
        // if (!isServer)
        // {
        //     return;

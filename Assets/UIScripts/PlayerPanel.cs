@@ -45,12 +45,14 @@ class PlayerPanelEntry
     public string m_Name;
     public PlayerController m_Player;
     public int m_Score;
-
+    public float m_Health;
 
     public PlayerPanelEntry(string _name, PlayerController _player)
     {
+        //set base parameters to have valid
         m_Name = _name;
         m_Player = _player;
         m_Score = 0;
+        m_Health = 100;
     }
 }
