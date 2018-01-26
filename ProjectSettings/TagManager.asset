@@ -9,6 +9,7 @@ TagManager:
   - hitFX
   - MainCanvas
   - Pick Up
+  - InfoPanel
   layers:
   - Default
   - TransparentFX
